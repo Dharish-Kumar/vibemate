@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vibeMate</title>
+    <!-- Start-up safety net: if the app can't start (a file failed to load or a script error),
+         the page says what went wrong after 6 s instead of staying blank. -->
+    <script>
+      window.__vmProblems = [];
+      addEventListener("error", function (e) {
+        var el = e.target, src = el && (el.src || el.href);
+        window.__vmProblems.push(src ? "Couldn't load " + src.split("?")[0].replace(location.origin, "") : (e.message || "Script error"));
+      }, true);
+      setTimeout(function () {
+        if (window.__vmStarted) return;
+        var box = document.createElement("div");
+        box.className = "bootfail";
+        box.innerHTML = "<strong>vibeMate couldn't start</strong><ul>" +
+          (window.__vmProblems.length ? window.__vmProblems : ["Unknown error. Open the browser console (F12) and send the red message."])
+          .map(function (m) { return "<li>" + String(m).replace(/</g, "&lt;") + "</li>"; }).join("") +
+          "</ul><p>Then reload with Ctrl + Shift + R (clears the old cached files).</p>";
+        document.body.appendChild(box);
+      }, 6000);
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
