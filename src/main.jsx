@@ -7,7 +7,7 @@ import App from './App.jsx'
 import { requireUser } from './lib/auth.js'
 import { loadChats } from './lib/chatsApi.js'
 
-;(async () => {
+(async () => {
   try {
     const user = await requireUser()
     const chats = await loadChats().catch((err) => { console.warn('Chats:', err.message); return [] })
